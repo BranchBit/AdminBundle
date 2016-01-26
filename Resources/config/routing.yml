@@ -1,0 +1,3 @@
+bbit_admin:
+    path:      /
+    defaults:  { _controller: BBITAdminBundle:Default:index }
