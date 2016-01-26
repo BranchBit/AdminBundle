@@ -1,3 +1,3 @@
 bbit_admin:
-    path:      /
+    path:      /admin
     defaults:  { _controller: BBITAdminBundle:Default:index }

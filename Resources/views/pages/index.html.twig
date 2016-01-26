@@ -1,0 +1,20 @@
+{% extends 'BBITAdminBundle::base.html.twig' %}
+
+{% block title %}{{ project_name }} Dashboard Pages{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+    <tr>
+        <th>id</th>
+        <th>item</th>
+    </tr>
+    {% for item in items %}
+        <tr>
+            <td>{{ item.id }}</td><td>{{ item }}</td>
+        </tr>
+    {% endfor %}
+
+    </table>
+
+{% endblock %}
