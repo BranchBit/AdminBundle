@@ -8,10 +8,11 @@
     <tr>
         <th>id</th>
         <th>item</th>
+        <th>action</th>
     </tr>
     {% for item in items %}
         <tr>
-            <td>{{ item.id }}</td><td>{{ item }}</td>
+            <td>{{ item.id }}</td><td>{{ item }}</td><td><a href="{{ path('bbit_pages_edit', {'id': item.id}) }}">edit</a></td>
         </tr>
     {% endfor %}
 
