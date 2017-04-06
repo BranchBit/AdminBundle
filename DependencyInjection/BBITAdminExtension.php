@@ -8,9 +8,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * @link http://symfony.com/doc/current/cookbook/bundles/extension.html
  */
 class BBITAdminExtension extends Extension
 {
@@ -21,6 +21,14 @@ class BBITAdminExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+
+
+        // let resources override the previous set value
+//        foreach ($configs as $subConfig) {
+//            $config = array_merge($config, $subConfig);
+//        }
+
+        $container->setParameter('bbit_admin.route_prefix', $config['route_prefix']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

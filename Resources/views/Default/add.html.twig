@@ -1,0 +1,18 @@
+{% extends '@BBITAdmin/Default/base.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block maincontent %}
+
+    <form method="post">
+        {% for child in form.children %}
+            {{ form_row(child) }}
+        {% endfor %}
+
+
+
+    <input type="submit" value="Save" class="btn btn-success">
+
+    </form>
+
+
+{% endblock %}

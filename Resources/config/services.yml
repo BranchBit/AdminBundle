@@ -1,2 +1,10 @@
 services:
-    #
+
+    admin_builder:
+        class: BBIT\AdminBundle\Service\AdminBuilder
+
+    admin.routing_loader:
+        class: BBIT\AdminBundle\Routing\AdminRouter
+        arguments: ["@admin_builder"]
+        tags:
+            - { name: routing.loader }
