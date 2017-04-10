@@ -33,6 +33,16 @@ class AdminRouter extends Loader
 
 
         foreach ($this->adminBuilder->getAdmins() as $admin) {
+
+            $path = '';
+            $defaults = array(
+                '_controller' => 'BBITAdminBundle:Dashboard:index',
+            );
+            $route = new Route($path, $defaults, []);
+            $routeName = 'bbit_admin_dashboard';
+            $routes->add($routeName, $route);
+
+
             foreach ($admin['admin']->getRoutes() as $routeName) {
                 $requirements = [];
                 $path = '/'.$admin['admin']->getName().'/'.$routeName;
