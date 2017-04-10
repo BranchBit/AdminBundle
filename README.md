@@ -42,4 +42,8 @@ Create Service:
             - { name: bbit.admin, label: 'items', other: 'blabla' }
             
             
+Config:
 
+    bbit_admin:
+        route_prefix: admin       # optional
+        disable_auth: false       # optional
