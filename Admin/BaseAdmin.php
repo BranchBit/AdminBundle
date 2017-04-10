@@ -193,7 +193,7 @@ class BaseAdmin
 
     public function listAction()
     {
-        if (!$this->authChecker->isGranted('view', $this->entityClass)) {
+        if (!$this->isGranted('view', $this->entityClass)) {
             throw new AccessDeniedException();
         }
 
@@ -223,7 +223,7 @@ class BaseAdmin
 
     public function editAction(Request $request, $id)
     {
-        if (!$this->authChecker->isGranted('edit', $this->entityClass)) {
+        if (!$this->isGranted('edit', $this->entityClass)) {
             throw new AccessDeniedException();
         }
 
@@ -249,7 +249,7 @@ class BaseAdmin
 
     public function addAction(Request $request)
     {
-        if (!$this->authChecker->isGranted('create', $this->entityClass)) {
+        if (!$this->isGranted('create', $this->entityClass)) {
             throw new AccessDeniedException();
         }
 
@@ -276,7 +276,7 @@ class BaseAdmin
 
     public function deleteAction($id)
     {
-        if (!$this->authChecker->isGranted('delete', $this->entityClass)) {
+        if (!$this->isGranted('delete', $this->entityClass)) {
             throw new AccessDeniedException();
         }
 
