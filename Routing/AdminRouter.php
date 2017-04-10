@@ -1,6 +1,7 @@
 <?php
 namespace BBIT\AdminBundle\Routing;
 
+use BBIT\AdminBundle\Controller\BaseController;
 use BBIT\AdminBundle\Service\AdminBuilder;
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\Route;
@@ -43,9 +44,9 @@ class AdminRouter extends Loader
             $routes->add($routeName, $route);
 
 
-            foreach ($admin['admin']->getRoutes() as $routeName) {
+            foreach ($admin->getRoutes() as $routeName) {
                 $requirements = [];
-                $path = '/'.$admin['admin']->getName().'/'.$routeName;
+                $path = '/'.$admin->getName().'/'.$routeName;
                 if (in_array($routeName, ['edit', 'delete'])) {
                     $path .= '/{id}';
                     $requirements = array(
@@ -53,14 +54,31 @@ class AdminRouter extends Loader
                     );
                 }
                 $defaults = array(
-                    '_controller' => $admin['admin']->getServiceName().':'.$routeName.'Action',
+                    '_controller' => $admin->getServiceName().':'.$routeName.'Action',
                 );
 
                 $route = new Route($path, $defaults, $requirements);
 
-                $routeName = 'bbit_admin_'.$admin['admin']->getName().'_'.$routeName;
+                $routeName = 'bbit_admin_'.$admin->getName().'_'.$routeName;
                 $routes->add($routeName, $route);
             }
+        }
+
+
+        /** @var BaseController $controller */
+        foreach ($this->adminBuilder->getControllers() as $controller) {
+            $requirements = [];
+            //todo check existance of tags
+            $path = '/'.$controller->getServiceTags()['route_name'];
+            $defaults = array(
+                '_controller' => $controller->getServiceName().':indexAction',
+            );
+
+            $route = new Route($path, $defaults, $requirements);
+
+            $routeName = 'bbit_admin_'.$controller->getServiceTags()['route_name'];
+            $routes->add($routeName, $route);
+
         }
 
 

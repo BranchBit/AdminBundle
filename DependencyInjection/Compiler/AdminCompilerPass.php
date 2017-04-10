@@ -18,9 +18,24 @@ class AdminCompilerPass implements CompilerPassInterface
 
         $taggedServices = $container->findTaggedServiceIds('bbit.admin');
 
-        foreach ($taggedServices as $id => $tags) {
+        $taggedControllerServices = $container->findTaggedServiceIds('bbit.admin.controller');
+        foreach ($taggedControllerServices as $id => $tags) {
+            $controllerDefinition = $container->findDefinition($id);
 
+            $controllerDefinition->addMethodCall('setServiceName', [$id]);
+            $controllerDefinition->addMethodCall('setServiceTags', [$tags[0]]);
+            $controllerDefinition->addMethodCall('setContainer', [new Reference('service_container')]);
+
+            $definition->addMethodCall('addController', array(new Reference($id)));
+
+        }
+
+        foreach ($taggedServices as $id => $tags) {
             $adminDefinition = $container->findDefinition($id);
+
+            $adminDefinition->addMethodCall('setServiceName', [$id]);
+            $adminDefinition->addMethodCall('setServiceTags', [$tags[0]]);
+
             $adminDefinition->addMethodCall('setTemplating', [new Reference('templating')]);
             $adminDefinition->addMethodCall('setDoctrine', [new Reference('doctrine')]);
             $adminDefinition->addMethodCall('setDatagrid', [new Reference('bbit_data_grid')]);
@@ -29,12 +44,7 @@ class AdminCompilerPass implements CompilerPassInterface
             $adminDefinition->addMethodCall('setRouter', [new Reference('router')]);
             $adminDefinition->addMethodCall('setAuthChecker', [new Reference('security.authorization_checker')]);
             $adminDefinition->addMethodCall('setAuthDisabled', [$container->getParameter('bbit_admin.disable_auth')]);
-
-            $adminDefinition->addMethodCall('setServiceName', [$id]);
-            $adminDefinition->addMethodCall('setServiceTags', [$tags[0]]);
-
             $adminDefinition->addMethodCall('setupName', []);
-
 
             $definition->addMethodCall('addAdmin', array(new Reference($id)));
 

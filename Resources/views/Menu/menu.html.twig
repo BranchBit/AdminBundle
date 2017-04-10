@@ -2,7 +2,13 @@
 
 {% block linkElement %}
     {% import 'knp_menu.html.twig' as knp_menu %}
-<a href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}><span>{{ block('label') }}</span></a>
+
+<a style="border-bottom-width: 1px; border-bottom-color: lightgrey; border-bottom-style: solid" href="{{ item.uri }}"{{ knp_menu.attributes(item.linkAttributes) }}>
+    {% if item.attributes.icon is defined %}
+        <span class="{{ item.attributes.icon }}" aria-hidden="true"></span>
+    {% endif %}
+    <span>{{ block('label') }}</span>
+</a>
 {% endblock %}
 
 
@@ -11,9 +17,9 @@
         {% import 'knp_menu.html.twig' as knp_menu %}
         <ul class="sidebar-menu"{{ knp_menu.attributes(listAttributes) }}>
             {% if item.name != 'root' %}
-                <li class="header">{{ item.name }}</li>
+                <li style="border-bottom-width: 1px; border-bottom-color: lightgrey; border-bottom-style: solid" class="header">{{ item.name }}</li>
             {% else %}
-                <li class="header">{{ options.name }}</li>
+                <li style="border-bottom-width: 1px; border-bottom-color: lightgrey; border-bottom-style: solid" class="header">{{ options.name }}</li>
             {% endif %}
             {{ block('children') }}
         </ul>

@@ -17,9 +17,23 @@ class AdminBuilder
 
     public function addAdmin($admin)
     {
-        $this->admins[] = [
-            'admin' => $admin,
-        ];
+        $this->admins[] = $admin;
+        return $this;
+    }
+
+    protected $controllers = [];
+
+    /**
+     * @return array
+     */
+    public function getControllers()
+    {
+        return $this->controllers;
+    }
+
+    public function addController($controller)
+    {
+        $this->controllers[] = $controller;
         return $this;
     }
 

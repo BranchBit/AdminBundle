@@ -15,9 +15,20 @@ class LeftMenuBuilder implements ContainerAwareInterface
         $menu = $factory->createItem('root');
 
         $admins = $this->container->get('admin_builder')->getAdmins();
+        $controllers = $this->container->get('admin_builder')->getControllers();
 
         foreach ($admins as $admin) {
-            $menu->addChild($admin['admin']->getServiceTags()['label'], array('route' => 'bbit_admin_'.$admin['admin']->getName().'_list'));
+            $menu->addChild($admin->getServiceTags()['label'], array('route' => 'bbit_admin_'.$admin->getName().'_list'));
+            if (array_key_exists('icon', $admin->getServiceTags())) {
+                $menu[$admin->getServiceTags()['label']]->setAttribute('icon', $admin->getServiceTags()['icon']);
+            }
+        }
+
+        foreach ($controllers as $controller) {
+            $menu->addChild($controller->getServiceTags()['label'], array('test' => 'test', 'route' => 'bbit_admin_'.$controller->getServiceTags()['route_name']));
+            if (array_key_exists('icon', $controller->getServiceTags())) {
+                $menu[$controller->getServiceTags()['label']]->setAttribute('icon', $controller->getServiceTags()['icon']);
+            }
         }
 
 

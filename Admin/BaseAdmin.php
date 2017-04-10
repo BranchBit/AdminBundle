@@ -2,6 +2,9 @@
 
 namespace BBIT\AdminBundle\Admin;
 
+use BBIT\AdminBundle\Traits\RouterInjectionTrait;
+use BBIT\AdminBundle\Traits\ServiceInfoTrait;
+use BBIT\AdminBundle\Traits\TemplatingInjectionTrait;
 use BBIT\DataGridBundle\Service\DataGridService;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilder;
@@ -14,17 +17,20 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class BaseAdmin
 {
 
+    use ServiceInfoTrait;
+    use TemplatingInjectionTrait;
+    use RouterInjectionTrait;
+
     protected $entityClass;
     protected $name;
-    protected $serviceName;
-    protected $serviceTags;
+
     protected $routePrefix;
     protected $authDisabled;
 
-    protected $templating;
+
     protected $doctrine;
     protected $datagrid;
-    protected $router;
+
     /**
      * @var AuthorizationCheckerInterface
      */
@@ -84,14 +90,6 @@ class BaseAdmin
     }
 
     /**
-     * @param mixed $router
-     */
-    public function setRouter($router)
-    {
-        $this->router = $router;
-    }
-
-    /**
      * @param mixed $formfactory
      */
     public function setFormfactory($formfactory)
@@ -115,46 +113,6 @@ class BaseAdmin
         $this->doctrine = $doctrine;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getServiceTags()
-    {
-        return $this->serviceTags;
-    }
-
-    /**
-     * @param mixed $serviceTags
-     */
-    public function setServiceTags($serviceTags)
-    {
-        $this->serviceTags = $serviceTags;
-    }
-
-    /**
-     * @param mixed $templating
-     */
-    public function setTemplating($templating)
-    {
-        $this->templating = $templating;
-    }
-
-    /**
-     * @param mixed $serviceName
-     */
-    public function setServiceName($serviceName)
-    {
-        $this->serviceName = $serviceName;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getServiceName()
-    {
-        return $this->serviceName;
-    }
-
     public function setupName()
     {
         if ($this->routeName !== null) {
@@ -166,7 +124,7 @@ class BaseAdmin
 
     public function isGranted($attributes, $object = null)
     {
-        if ($this->authDisabled) {return true;}
+        if (!$this->authDisabled) {return true;}
         return $this->authChecker->isGranted($attributes, $object);
     }
 
