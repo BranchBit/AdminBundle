@@ -19,6 +19,7 @@ class BaseAdmin
     protected $serviceName;
     protected $serviceTags;
     protected $routePrefix;
+    protected $authDisabled;
 
     protected $templating;
     protected $doctrine;
@@ -46,6 +47,14 @@ class BaseAdmin
     public function getRoutes()
     {
         return $this->routes;
+    }
+
+    /**
+     * @param mixed $authDisabled
+     */
+    public function setAuthDisabled($authDisabled)
+    {
+        $this->authDisabled = $authDisabled;
     }
 
 
@@ -157,6 +166,7 @@ class BaseAdmin
 
     public function isGranted($attributes, $object = null)
     {
+        if ($this->authDisabled) {return true;}
         return $this->authChecker->isGranted($attributes, $object);
     }
 
@@ -211,6 +221,7 @@ class BaseAdmin
 
         $this->mapListFields($grid);
 
+        //TODO: only if actions available
         $grid->addField('actions', 'custom_template', [
             'template' => 'BBITAdminBundle:Default:actions.html.twig'
         ]);

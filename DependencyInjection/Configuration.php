@@ -23,8 +23,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('route_prefix')->defaultValue('admin')
-            ->end()
+            ->scalarNode('route_prefix')->defaultValue('admin')->end()
+            ->booleanNode('disable_auth')->defaultValue(false)->end()
         ;
 
         return $treeBuilder;

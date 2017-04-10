@@ -29,6 +29,7 @@ class BBITAdminExtension extends Extension
 //        }
 
         $container->setParameter('bbit_admin.route_prefix', $config['route_prefix']);
+        $container->setParameter('bbit_admin.disable_auth', $config['disable_auth']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
