@@ -39,7 +39,7 @@ Create Service:
         class: AppBundle\Admin\ItemAdmin
         arguments: ['AppBundle\Entity\Item']
         tags:
-            - { name: bbit.admin, label: 'items', other: 'blabla' }
+            - { name: bbit.admin, label: 'items', icon: 'glyphicon glyphicon-apple' }
             
             
 Config:
