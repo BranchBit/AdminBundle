@@ -1,3 +1,7 @@
-<a href="{{ path('bbit_admin_'~admin.getName~'_edit', {'id': item.id}) }}" class="btn btn-primary">Edit</a>
+{% if admin.isGranted('edit', item) %}
+    <a href="{{ path('bbit_admin_'~admin.getName~'_edit', {'id': item.id}) }}" class="btn btn-primary">Edit</a>
+{% endif %}
 
+{% if admin.isGranted('delete', item) %}
 <a href="{{ path('bbit_admin_'~admin.getName~'_delete', {'id': item.id}) }}" class="btn btn-danger">Delete</a>
+{% endif %}

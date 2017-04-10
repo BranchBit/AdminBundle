@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class BaseAdmin
 {
@@ -22,6 +24,11 @@ class BaseAdmin
     protected $doctrine;
     protected $datagrid;
     protected $router;
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    protected $authChecker;
+
     /**
      * @var FormBuilder
      */
@@ -49,6 +56,14 @@ class BaseAdmin
     public function __construct($entityClass)
     {
         $this->entityClass = $entityClass;
+    }
+
+    /**
+     * @param AuthorizationCheckerInterface $authChecker
+     */
+    public function setAuthChecker($authChecker)
+    {
+        $this->authChecker = $authChecker;
     }
 
     /**
@@ -140,6 +155,11 @@ class BaseAdmin
         }
     }
 
+    public function isGranted($attributes, $object = null)
+    {
+        return $this->authChecker->isGranted($attributes, $object);
+    }
+
     /**
      * @return mixed
      */
@@ -173,6 +193,10 @@ class BaseAdmin
 
     public function listAction()
     {
+        if (!$this->authChecker->isGranted('view', $this->entityClass)) {
+            throw new AccessDeniedException();
+        }
+
         $this->context = 'list';
 
 
@@ -199,6 +223,10 @@ class BaseAdmin
 
     public function editAction(Request $request, $id)
     {
+        if (!$this->authChecker->isGranted('edit', $this->entityClass)) {
+            throw new AccessDeniedException();
+        }
+
         $this->context = 'edit';
         $item = $this->getRepo()->find($id);
 
@@ -221,6 +249,10 @@ class BaseAdmin
 
     public function addAction(Request $request)
     {
+        if (!$this->authChecker->isGranted('create', $this->entityClass)) {
+            throw new AccessDeniedException();
+        }
+
         $this->context = 'add';
         $item = new $this->entityClass;
 
@@ -244,7 +276,11 @@ class BaseAdmin
 
     public function deleteAction($id)
     {
-        $this->context = 'edit';
+        if (!$this->authChecker->isGranted('delete', $this->entityClass)) {
+            throw new AccessDeniedException();
+        }
+
+        $this->context = 'delete';
         $item = $this->getRepo()->find($id);
         $this->doctrine->getManager()->remove($item);
         $this->doctrine->getManager()->flush();

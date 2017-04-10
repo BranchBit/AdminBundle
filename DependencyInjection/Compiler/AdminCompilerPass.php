@@ -27,6 +27,8 @@ class AdminCompilerPass implements CompilerPassInterface
             $adminDefinition->addMethodCall('setFormfactory', [new Reference('form.factory')]);
             $adminDefinition->addMethodCall('setRoutePrefix', [$container->getParameter('bbit_admin.route_prefix')]);
             $adminDefinition->addMethodCall('setRouter', [new Reference('router')]);
+            $adminDefinition->addMethodCall('setAuthChecker', [new Reference('security.authorization_checker')]);
+
             $adminDefinition->addMethodCall('setServiceName', [$id]);
             $adminDefinition->addMethodCall('setServiceTags', [$tags[0]]);
 
