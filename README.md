@@ -48,12 +48,6 @@ Config:
         route_prefix: admin       # optional
         disable_auth: false       # optional
         
-    assetic:
-        debug: "%kernel.debug%"
-        use_controller: "%kernel.debug%"
-        bundles: []
-        filters:
-            cssrewrite: ~
         
 Routing:
 
