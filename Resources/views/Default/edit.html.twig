@@ -11,7 +11,7 @@
 
 
     <input type="submit" value="Save" class="btn btn-success">
-    <a class="btn btn-danger" href="{{ path('bbit_admin_'~admin.getName~'_delete', {'id': item.id}) }}">Remove {{ admin.getName|capitalize }}</a>
+    <a class="btn btn-danger" href="{{ path('bbit_admin_'~admin.getName~'_delete', {'id': item.id}) }}"><span class="glyphicon glyphicon-trash"></span> Remove {{ admin.getName|capitalize }}</a>
 
     </form>
 
