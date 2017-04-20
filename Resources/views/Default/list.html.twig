@@ -3,7 +3,7 @@
 {% block maincontent %}
 
 
-    <a class="btn btn-success" href="{{ path('bbit_admin_'~admin.getName~'_add') }}">Add new {{ admin.getName|capitalize }}</a>
+    <a class="btn btn-success" href="{{ path('bbit_admin_'~admin.getName~'_add') }}"><span class="glyphicon glyphicon-plus"></span> {{ admin.getName|capitalize }}</a>
     <br>
     {{ grid|raw }}
 
