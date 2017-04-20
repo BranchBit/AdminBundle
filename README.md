@@ -47,3 +47,16 @@ Config:
     bbit_admin:
         route_prefix: admin       # optional
         disable_auth: false       # optional
+        
+    assetic:
+        debug: "%kernel.debug%"
+        use_controller: "%kernel.debug%"
+        bundles: []
+        filters:
+            cssrewrite: ~
+        
+Routing:
+
+    bbit_admin:
+        resource: "@BBITAdminBundle/Resources/config/routing.yml"
+        prefix:   /
