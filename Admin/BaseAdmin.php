@@ -124,7 +124,7 @@ class BaseAdmin
 
     public function isGranted($attributes, $object = null)
     {
-        if (!$this->authDisabled) {return true;}
+        if ($this->authDisabled) {return true;}
         return $this->authChecker->isGranted($attributes, $object);
     }
 
