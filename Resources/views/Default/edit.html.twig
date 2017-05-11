@@ -11,8 +11,9 @@
 
 
     <input type="submit" value="Save" class="btn btn-success">
-    <a class="btn btn-danger" href="{{ path('bbit_admin_'~admin.getName~'_delete', {'id': item.id}) }}"><span class="glyphicon glyphicon-trash"></span> Remove {{ admin.getName|capitalize }}</a>
-
+    {% if 'delete' in admin.routes %}
+        <a class="btn btn-danger" href="{{ path('bbit_admin_'~admin.getName~'_delete', {'id': item.id}) }}"><span class="glyphicon glyphicon-trash"></span> Remove {{ admin.getName|capitalize }}</a>
+    {% endif %}
     </form>
 
 
