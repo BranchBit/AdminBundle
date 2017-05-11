@@ -3,8 +3,10 @@
 {% block maincontent %}
 
 
-    <a class="btn btn-success" href="{{ path('bbit_admin_'~admin.getName~'_add') }}"><span class="glyphicon glyphicon-plus"></span> {{ admin.getName|capitalize }}</a>
-    <br>
+    {% if 'add' in admin.routes %}
+        <a class="btn btn-success" href="{{ path('bbit_admin_'~admin.getName~'_add') }}"><span class="glyphicon glyphicon-plus"></span> {{ admin.getName|capitalize }}</a>
+        <br>
+    {% endif %}
     {{ grid|raw }}
 
 
