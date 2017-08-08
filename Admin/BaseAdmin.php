@@ -208,6 +208,11 @@ class BaseAdmin
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if (method_exists($this, 'postSaveAction')) {
+                $item = $this->postSaveAction($item);
+            }
+
             $this->doctrine->getManager()->flush();
             //return new RedirectResponse($this->router->generate('bbit_admin_'.$this->getName().'_'.$this->context, ['id' => $id]));
         }
@@ -234,6 +239,11 @@ class BaseAdmin
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if (method_exists($this, 'postSaveAction')) {
+                $item = $this->postSaveAction($item);
+            }
+
             $this->doctrine->getManager()->persist($item);
             $this->doctrine->getManager()->flush();
             return new RedirectResponse($this->router->generate('bbit_admin_'.$this->getName().'_list'));
