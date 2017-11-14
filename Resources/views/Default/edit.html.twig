@@ -3,7 +3,7 @@
 
 {% block maincontent %}
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% for child in form.children %}
             {{ form_row(child) }}
         {% endfor %}
