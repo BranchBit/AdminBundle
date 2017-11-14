@@ -199,6 +199,11 @@ class BaseAdmin
         $this->context = 'edit';
         $item = $this->getRepo()->find($id);
 
+        if (method_exists($this, 'preSaveAction')) {
+            $item = $this->preSaveAction($item);
+        }
+
+
         $formBuilder = $this->formfactory->createBuilder(FormType::class, $item);
         $this->mapFormFields($formBuilder);
 
